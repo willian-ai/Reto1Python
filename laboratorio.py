@@ -105,19 +105,22 @@ def calcularEstadistica(experimento):
 
 def compararExperimentos(experimento):
     """Funcion para comparar experimentos"""
-    vizualizarExperimento()
-    indices = list(int, input("Ingrese los indices de los experimentos que desea comparar: ").split(","))
+    vizualizarExperimento(experimento)
+    indices = list(map(int, input("Ingrese los dos experimentos que desea comparar separados por comas: ").split(",")))
     result_compara = []
     for index in indices:
-        if (0 <= index - 1 < len(experimento)):
+        if (0 <= index < len(experimento)):
             promedio = statistics.mean(experimento[index - 1].resultadoExperimento)
-            result_compara.append(index - 1, promedio)
+            result_compara.append(promedio)
+            #maximo = max(experimento[index - 1].resultadoExperimento)
+            #minimo = min(experimento[index - 1].resultadoExperimento)
+            #result_compara.append( promedio)
         else:
             print(f"El indice {index} ingresado no es valido")
-    result_compara.sort(key=lambda x: x[1])
-    print("Experimentos comprados con exito")
-    for comparar in result_compara:
-        print(f"Experimento {comparar[0]} con promedio {comparar[1]}")
+   
+    print(f"Experimentos comparados: {result_compara} \n")
+    #for result, promedio in result_compara:
+    #    print(f"Experimento {result} con promedio {promedio}")
     return
 
 def generarInforme(experimento):
@@ -149,9 +152,11 @@ def Menu():
     
     listaExperimento = [
 
-        Experimento("Experimento 1", datetime.strptime("16/11/2024", "%d/%m/%Y"), "Química", [5, 3, 4, 5, 6, 4]),
+        Experimento("Experimento 1", datetime.strptime("12/11/2024", "%d/%m/%Y"), "Química", [5, 3, 4, 5, 6, 4]),
 
-        Experimento("Experimento 2", datetime.strptime("16/11/2024", "%d/%m/%Y"), "Física", [7, 8, 6, 9, 5]),
+        Experimento("Experimento 2", datetime.strptime("22/11/2024", "%d/%m/%Y"), "Física", [7, 8, 6, 9, 5]),
+        Experimento("Experimento 3", datetime.strptime("03/10/2024", "%d/%m/%Y"), "Biologia", [17, 28, 36, 19, 25]),
+        Experimento("Experimento 4", datetime.strptime("28/09/2024", "%d/%m/%Y"), "Biologia", [37, 18, 16, 19, 15]),
 
     ]
     while True:
