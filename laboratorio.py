@@ -54,6 +54,7 @@ def agregarExperimento(experimento):
     prueba = Experimento(nombreExperimento, fechaExperimento, tipoExperimento, resultadoExperimento)
     # Agregar el objeto
     experimento.append(prueba)
+    # imprimir mensaje al realizar con exito agregar el experimento
     print("Experimento agregado con exito")
 
 
