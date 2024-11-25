@@ -106,23 +106,30 @@ def calcularEstadistica(experimento):
 def compararExperimentos(experimento):
     """Funcion para comparar experimentos"""
     vizualizarExperimento(experimento)
-    indices = list(map(int, input("Ingrese los dos experimentos que desea comparar separados por comas: ").split(",")))
+    indices = list(map(int, input("Ingrese los dos experimentos que desea comparar separados por comas: ").split(",")))     
     result_compara = []
+    table = PrettyTable(border=True, header=True, padding_width=5)
+    table.field_names = ["<== NOMBRE ==>", "<== TIPO ==>","<== PROMEDIO ==>", "<== MAXIMO ==>", "<== MINIMO ==>"]
     for index in indices:
         if (0 <= index < len(experimento)):
+            nombre = experimento[index - 1].nombreExperimento
+            tipo = experimento[index - 1].tipoExperimento
             promedio = statistics.mean(experimento[index - 1].resultadoExperimento)
+            maximo = max(experimento[index - 1].resultadoExperimento)
+            minimo = min(experimento[index - 1].resultadoExperimento)
+            result_compara.append(experimento[index - 1].nombreExperimento)
+            result_compara.append(experimento[index - 1].tipoExperimento)
+            result_compara.append(nombre)
+            result_compara.append(tipo)
             result_compara.append(promedio)
-            #maximo = max(experimento[index - 1].resultadoExperimento)
-            #minimo = min(experimento[index - 1].resultadoExperimento)
-            #result_compara.append( promedio)
+            result_compara.append(maximo)
+            result_compara.append(minimo)
+            table.add_row([nombre, tipo, promedio, maximo, minimo], divider=True)
+            
         else:
             print(f"El indice {index} ingresado no es valido")
-   
-    print(f"Experimentos comparados: {result_compara} \n")
-    #for result, promedio in result_compara:
-    #    print(f"Experimento {result} con promedio {promedio}")
-    return
-
+    print(table)
+    return result_compara
 def generarInforme(experimento):
     """Funcion para generar un informe"""
     if experimento:
@@ -153,7 +160,6 @@ def Menu():
     listaExperimento = [
 
         Experimento("Experimento 1", datetime.strptime("12/11/2024", "%d/%m/%Y"), "Química", [5, 3, 4, 5, 6, 4]),
-
         Experimento("Experimento 2", datetime.strptime("22/11/2024", "%d/%m/%Y"), "Física", [7, 8, 6, 9, 5]),
         Experimento("Experimento 3", datetime.strptime("03/10/2024", "%d/%m/%Y"), "Biologia", [17, 28, 36, 19, 25]),
         Experimento("Experimento 4", datetime.strptime("28/09/2024", "%d/%m/%Y"), "Biologia", [37, 18, 16, 19, 15]),
