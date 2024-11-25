@@ -27,11 +27,13 @@ def agregarExperimento(experimento):
     except ValueError:
         print("Fecha ingresada para el experimento, No es valida. ")
     print("""
-    1) Qimica       3) Fisica
-    2) Ciencias        4) Otros
+    1) Qimica 
+    2) Biologicas    
+    3) Fisica
+    4) Otros
     """)
-    tipoExperimento = input("Ingrese el tipo de experiemento: ").upper().strip()
-    
+    tipoExperimento = input("Ingrese el tipo de experiemento: ").strip()
+    # Validar
     if tipoExperimento == "1":
         tipoExperimento = "Quimica"
     elif tipoExperimento == "2":
@@ -65,14 +67,14 @@ def vizualizarExperimento(experimento):
         # Crear la tabla
         table = PrettyTable(border=True, header=True, padding_width=5)
       # Añadir los encabezados
-        table.title = "EXPERIMENTOS"
+        table.title = " EXPERIMENTOS CREADOS "
         # Añadir los encabezados
         table.field_names = [" <== NUMERO ==> ", " <== NOMBRE ==>", " <== FECHA ==>", " <== TIPO ==>", " <== RESULTADO ==>"]
         # Añadir los datos
         for i, test in enumerate(experimento, start=1):
             table.add_row([i, test.nombreExperimento, test.fechaExperimento.strftime('%d/%m/%Y'), test.tipoExperimento, test.resultadoExperimento], divider=True)
         # Alinear los datos
-        table.align = "l"
+        table.align = "c"
         print(table)
        
     else:
@@ -95,7 +97,7 @@ def calcularEstadistica(experimento):
             maximo = max(result.resultadoExperimento)
             minimo = min(result.resultadoExperimento)
             table.add_row([ nombre, tipo, promedio, maximo, minimo], divider=True)
-            
+        table.align = "c"    
         print(table)
         
     else:
@@ -105,13 +107,21 @@ def calcularEstadistica(experimento):
 
 def compararExperimentos(experimento):
     """Funcion para comparar experimentos"""
+    # Mostrar los experimentos
     vizualizarExperimento(experimento)
+    # Pedir los indices
     indices = list(map(int, input("Ingrese los dos experimentos que desea comparar separados por comas: ").split(",")))     
+    # Comparar
     result_compara = []
+    # Crear la tabla
     table = PrettyTable(border=True, header=True, padding_width=5)
+    # Titulo de la tabla
+    table.title = "EXPERIMENTOS COMPARADOS"
+    # Añadir los encabezados
     table.field_names = ["<== NOMBRE ==>", "<== TIPO ==>","<== PROMEDIO ==>", "<== MAXIMO ==>", "<== MINIMO ==>"]
+    # Añadir los datos
     for index in indices:
-        if (0 <= index < len(experimento)):
+        if (1 <= index < len(experimento)+1):
             nombre = experimento[index - 1].nombreExperimento
             tipo = experimento[index - 1].tipoExperimento
             promedio = statistics.mean(experimento[index - 1].resultadoExperimento)
@@ -124,10 +134,13 @@ def compararExperimentos(experimento):
             result_compara.append(promedio)
             result_compara.append(maximo)
             result_compara.append(minimo)
+            # Añadir los datos a la tabla a mostrar
             table.add_row([nombre, tipo, promedio, maximo, minimo], divider=True)
             
         else:
+            # Si el indice ingresado no es valido
             print(f"El indice {index} ingresado no es valido")
+    table.align = "c"
     print(table)
     return result_compara
 def generarInforme(experimento):
@@ -172,7 +185,7 @@ def Menu():
         print("1. Agregar Experimento")
         print("2. Visualizar Experimentos")
         print("3. Calcular Estadisticas")
-        print("4. Comprar Experimentos")
+        print("4. Comparar Experimentos")
         print("5. Generar Informe")
         print("6. Salir")
         # Pedir la opcion
