@@ -27,21 +27,21 @@ def agregarExperimento(experimento):
     except ValueError:
         print("Fecha ingresada para el experimento, No es valida. ")
     print("""
-    1) Qimica 
-    2) Biologicas    
-    3) Fisica
-    4) Otros
+    1) QUIMICA 
+    2) BIOLOGIA    
+    3) FISICA
+    4) OTROS
     """)
-    tipoExperimento = input("Ingrese el tipo de experiemento: ").strip()
+    tipoExperimento = input("Ingrese el tipo de experiemento: ").strip().upper()
     # Validar
     if tipoExperimento == "1":
-        tipoExperimento = "Quimica"
+        tipoExperimento = "QUIMICA"
     elif tipoExperimento == "2":
-        tipoExperimento = "Bilogia"
+        tipoExperimento = "BIOLOGIA"
     elif tipoExperimento == "3":
-        tipoExperimento = "Fisica"
+        tipoExperimento = "FISICA"
     elif tipoExperimento == "4":
-        tipoExperimento = "Otro"
+        tipoExperimento = "OTROS"
     else:
         print("Tipo de experimento no valido")
         
@@ -50,7 +50,7 @@ def agregarExperimento(experimento):
     try:
         resultadoExperimento = list(map(float, resultadoExperimentoNum.split(",")))
     except  ValueError:
-        print("Horas no validas")
+        print("Datos no validas")
         return
     # Crear el objeto
     prueba = Experimento(nombreExperimento, fechaExperimento, tipoExperimento, resultadoExperimento)
@@ -72,7 +72,7 @@ def vizualizarExperimento(experimento):
         table.field_names = [" <== NUMERO ==> ", " <== NOMBRE ==>", " <== FECHA ==>", " <== TIPO ==>", " <== RESULTADO ==>"]
         # Añadir los datos
         for i, test in enumerate(experimento, start=1):
-            table.add_row([i, test.nombreExperimento, test.fechaExperimento.strftime('%d/%m/%Y'), test.tipoExperimento, test.resultadoExperimento], divider=True)
+            table.add_row([i, test.nombreExperimento.upper(), test.fechaExperimento.strftime('%d/%m/%Y'), test.tipoExperimento.upper(), test.resultadoExperimento], divider=True)
         # Alinear los datos
         table.align = "c"
         print(table)
@@ -91,8 +91,8 @@ def calcularEstadistica(experimento):
         table.field_names = ["<== NOMBRE ==>", "<== TIPO ==>","<== PROMEDIO ==>", "<== MAXIMO ==>", "<== MINIMO ==>"]
         # Añadir los datos
         for result in experimento:
-            nombre = result.nombreExperimento
-            tipo = result.tipoExperimento
+            nombre = result.nombreExperimento.upper()
+            tipo = result.tipoExperimento.upper()
             promedio = statistics.mean(result.resultadoExperimento)
             maximo = max(result.resultadoExperimento)
             minimo = min(result.resultadoExperimento)
@@ -122,8 +122,8 @@ def compararExperimentos(experimento):
     # Añadir los datos
     for index in indices:
         if (1 <= index < len(experimento)+1):
-            nombre = experimento[index - 1].nombreExperimento
-            tipo = experimento[index - 1].tipoExperimento
+            nombre = experimento[index - 1].nombreExperimento.upper()
+            tipo = experimento[index - 1].tipoExperimento.upper()
             promedio = statistics.mean(experimento[index - 1].resultadoExperimento)
             maximo = max(experimento[index - 1].resultadoExperimento)
             minimo = min(experimento[index - 1].resultadoExperimento)
@@ -152,13 +152,13 @@ def generarInforme(experimento):
             
             for informe in experimento:
                 archivo.write("########################################\n")
-                archivo.write(f"Nombre: {informe.nombreExperimento}\n")
-                archivo.write(f"Fecha: {informe.fechaExperimento.strftime('%d/%m/%Y')}\n")
-                archivo.write(f"Tipo: {informe.tipoExperimento}\n")
-                archivo.write(f"Resultado: {informe.resultadoExperimento}\n")
-                archivo.write(f"Promedio: {statistics.mean(informe.resultadoExperimento)}\n")
-                archivo.write(f"Maximo: {max(informe.resultadoExperimento)}\n")
-                archivo.write(f"Minimo: {min(informe.resultadoExperimento)}\n")
+                archivo.write(f"NOMBRE: {informe.nombreExperimento.upper()}\n")
+                archivo.write(f"FECHA: {informe.fechaExperimento.strftime('%d/%m/%Y')}\n")
+                archivo.write(f"TIPO: {informe.tipoExperimento.upper()}\n")
+                archivo.write(f"RESULTADOS: {informe.resultadoExperimento}\n")
+                archivo.write(f"PROMEDIO: {statistics.mean(informe.resultadoExperimento)}\n")
+                archivo.write(f"MAXIMO: {max(informe.resultadoExperimento)}\n")
+                archivo.write(f"MINIMO: {min(informe.resultadoExperimento)}\n")
                 archivo.write("########################################\n")
                 
         print("Informe generado con exito")
@@ -180,14 +180,15 @@ def Menu():
     ]
     while True:
         # Mostrar el menu
-        print("======= Menu Principal ============")
-        print("======= Gestion de Experimentos =========")
-        print("1. Agregar Experimento")
-        print("2. Visualizar Experimentos")
-        print("3. Calcular Estadisticas")
-        print("4. Comparar Experimentos")
-        print("5. Generar Informe")
-        print("6. Salir")
+        print("=========== MENU PRINCIPAL ==============")
+        print("======= GESTION DE EXPERIMENTOS =========")
+        print("1. AGREGAR EXPERIMENTO")
+        print("2. VIZUALIZAR EXPERIMENTOS")
+        print("3. CALCULAR ESTADISTICA")
+        print("4. COMPARAR EXPERIMENTOS")
+        print("5. GENERAR INFORME")
+        print("6. SALIR")
+        print("=====================================")
         # Pedir la opcion
         opcion = int(input("Ingrese una opcion: "))
         # Ejecutar la opcion
